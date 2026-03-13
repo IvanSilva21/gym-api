@@ -1,13 +1,10 @@
-package com.academia.gymapi.dto.response;
+package com.academia.gymapi.dto.request;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class StudentResponseDTO {
+public class StudentRequestDTO {
 
-    private Long id;
     private String name;
     private String email;
     private String phone;

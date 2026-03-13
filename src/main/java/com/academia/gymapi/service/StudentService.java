@@ -1,5 +1,7 @@
 package com.academia.gymapi.service;
 
+import com.academia.gymapi.dto.request.StudentRequestDTO;
+import com.academia.gymapi.dto.response.StudentResponseDTO;
 import com.academia.gymapi.model.Student;
 import com.academia.gymapi.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,24 @@ public class StudentService {
         this.repository = repository;
     }
 
-    public Student create(Student student){
-        return repository.save(student);
+    public StudentResponseDTO create(StudentRequestDTO dto){
+
+        Student student = Student.builder()
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .phone(dto.getPhone())
+                .age(dto.getAge())
+                .build();
+
+        student = repository.save(student);
+
+        return StudentResponseDTO.builder()
+                .id(student.getId())
+                .name(student.getName())
+                .email(student.getEmail())
+                .phone(student.getPhone())
+                .age(student.getAge())
+                .build();
     }
 
     public List<Student> listAll(){
