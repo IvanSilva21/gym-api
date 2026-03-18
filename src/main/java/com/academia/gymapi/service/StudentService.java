@@ -2,6 +2,7 @@ package com.academia.gymapi.service;
 
 import com.academia.gymapi.dto.request.StudentRequestDTO;
 import com.academia.gymapi.dto.response.StudentResponseDTO;
+import com.academia.gymapi.exception.ResourceNotFoundException;
 import com.academia.gymapi.model.Student;
 import com.academia.gymapi.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class StudentService {
 
     public Student findById(Long id){
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
     }
 
     public void delete(Long id){

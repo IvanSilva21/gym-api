@@ -1,6 +1,7 @@
 package com.academia.gymapi.service;
 
 import com.academia.gymapi.dto.request.MembershipRequestDTO;
+import com.academia.gymapi.exception.ResourceNotFoundException;
 import com.academia.gymapi.model.*;
 import com.academia.gymapi.repository.*;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,10 @@ public class MembershipService {
     public Membership create(MembershipRequestDTO dto){
 
         Student student = studentRepository.findById(dto.getStudentId())
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
 
         Plan plan = planRepository.findById(dto.getPlanId())
-                .orElseThrow(() -> new RuntimeException("Plan not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
 
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusDays(plan.getDurationInDays());

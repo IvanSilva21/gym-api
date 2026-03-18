@@ -1,5 +1,6 @@
 package com.academia.gymapi.service;
 
+import com.academia.gymapi.exception.ResourceNotFoundException;
 import com.academia.gymapi.model.Plan;
 import com.academia.gymapi.repository.PlanRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class PlanService {
 
     public Plan findById(Long id){
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Plano não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
     }
 
     public void delete(Long id){
