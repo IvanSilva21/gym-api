@@ -20,6 +20,16 @@ public class StudentService {
         this.repository = repository;
     }
 
+    private StudentResponseDTO toDTO(Student student){
+        return StudentResponseDTO.builder()
+                .id(student.getId())
+                .name(student.getName())
+                .email(student.getEmail())
+                .phone(student.getPhone())
+                .age(student.getAge())
+                .build();
+    }
+
     public StudentResponseDTO create(StudentRequestDTO dto){
 
         Student student = Student.builder()
@@ -40,13 +50,17 @@ public class StudentService {
                 .build();
     }
 
-    public Page<Student> list(String name, Pageable pageable){
+    public Page<StudentResponseDTO> list(String name, Pageable pageable){
+
+        Page<Student> students;
 
         if (name != null && !name.isEmpty()) {
-            return repository.findByNameContainingIgnoreCase(name, pageable);
+            students = repository.findByNameContainingIgnoreCase(name, pageable);
+        } else {
+            students = repository.findAll(pageable);
         }
 
-        return repository.findAll(pageable);
+        return students.map(this::toDTO);
     }
 
     public Student findById(Long id){

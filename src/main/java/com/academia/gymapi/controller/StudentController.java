@@ -32,7 +32,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public Page<Student> list(
+    public Page<StudentResponseDTO> list(
             @RequestParam(required = false) String name,
             Pageable pageable){
 
