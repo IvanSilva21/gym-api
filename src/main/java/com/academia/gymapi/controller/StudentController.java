@@ -7,7 +7,10 @@ import com.academia.gymapi.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -29,8 +32,11 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> list(){
-        return service.listAll();
+    public Page<Student> list(
+            @RequestParam(required = false) String name,
+            Pageable pageable){
+
+        return service.list(name, pageable);
     }
 
     @GetMapping("/{id}")

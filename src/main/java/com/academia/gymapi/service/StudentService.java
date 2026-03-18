@@ -6,8 +6,10 @@ import com.academia.gymapi.exception.ResourceNotFoundException;
 import com.academia.gymapi.model.Student;
 import com.academia.gymapi.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 @Service
 public class StudentService {
@@ -38,8 +40,13 @@ public class StudentService {
                 .build();
     }
 
-    public List<Student> listAll(){
-        return repository.findAll();
+    public Page<Student> list(String name, Pageable pageable){
+
+        if (name != null && !name.isEmpty()) {
+            return repository.findByNameContainingIgnoreCase(name, pageable);
+        }
+
+        return repository.findAll(pageable);
     }
 
     public Student findById(Long id){
