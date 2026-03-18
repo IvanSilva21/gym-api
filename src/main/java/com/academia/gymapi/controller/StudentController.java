@@ -6,6 +6,7 @@ import com.academia.gymapi.model.Student;
 import com.academia.gymapi.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class StudentController {
 
     @PostMapping
     @Operation(summary = "Create student")
-    public StudentResponseDTO create(@RequestBody StudentRequestDTO dto){
+    public StudentResponseDTO create(@RequestBody @Valid StudentRequestDTO dto){
         return service.create(dto);
     }
 
